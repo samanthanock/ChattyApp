@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import Message from './Message.jsx';
 
 class MessageList extends Component {
   render() {
+    // console.log(this.props.messages);
+    // need to loop through data array to extract username and messages.
+    // .map ????
+    const getMessages = this.props.messages.map((msgs) => {
+      return <Message message={msgs} key={msgs.id} />;
+    });
     return (
       <div>
-        <div className="message">
-          <span className="message-username">Anonymous1</span>
-          <span className="message-content">That' don't impress me much.</span>
-        </div>
-        <div className="message system">
-          Anonymous1 changed their name to SHANIA
-        </div>
+        <main className="message">{getMessages}</main>
       </div>
     );
   }
