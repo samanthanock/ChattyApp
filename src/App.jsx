@@ -1,8 +1,26 @@
 import React, { Component } from 'react';
 import ChatBar from './chatbar.jsx';
-import Message from './Message.jsx';
+import MessageList from './MessageList.jsx';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    // setting intial state
+    this.state = {
+      currentUser: { name: 'Bob' }, //--> if currentUser is not defined, means user is Anon
+      messages: [
+        {
+          username: 'Bob',
+          content: 'Has anyone seen my marbles?'
+        },
+        {
+          username: 'Anonymous',
+          content: 'No, I think you lost them bro.'
+        }
+      ]
+    };
+  }
+
   render() {
     return (
       <div>
@@ -12,8 +30,8 @@ class App extends Component {
             Chatty
           </a>
         </nav>
-        <Message />
-        <ChatBar />
+        <ChatBar user={this.state.currentUser} />
+        <MessageList messages={this.state.messages} />
       </div>
     );
   }

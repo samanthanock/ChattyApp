@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import MessageList from './MessageList.jsx';
 
 class Message extends Component {
   render() {
     return (
       <div>
         <main className="messages">
-          <MessageList />
+          <span className="message-username">
+            {this.props.message.username}
+          </span>
+          <span className="message-content">{this.props.message.content}</span>
         </main>
       </div>
     );
