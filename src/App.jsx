@@ -21,7 +21,29 @@ class App extends Component {
         }
       ]
     };
+    // need to bind in order to use the newMessage function
+    this.newMessage = this.newMessage.bind(this);
   }
+  // adding messages through the chatbar//
+  //will need a function both in app and in chatbar to handle the event
+
+  newMessage(content) {
+    // what are the current messages?
+    const currentMessages = this.state.messages;
+    // what will we need for the incoming messages?
+    const incomingMessage = {
+      username: this.state.currentUser.name,
+      content: content,
+      id: currentMessages.length
+    };
+    const newMsg = currentMessages.concat(incomingMessage);
+    this.setState({
+      messages: newMsg
+    });
+  }
+  //new message will be in here because app deals with data
+  // the handler will be in chatbar because that component will handle the event
+
   componentDidMount() {
     console.log('componentDidMount <App />');
     setTimeout(() => {
