@@ -7,7 +7,7 @@ class App extends Component {
     super(props);
     // setting intial state
     this.state = {
-      currentUser: { name: 'Bob' }, //--> if currentUser is not defined, means user is Anon
+      currentUser: { name: 'Cher' }, //--> if currentUser is not defined, means user is Anon
       messages: [
         {
           id: 1,
@@ -34,8 +34,9 @@ class App extends Component {
     const incomingMessage = {
       username: this.state.currentUser.name,
       content: content,
-      id: currentMessages.length
+      id: currentMessages.length + 1
     };
+    this.socket.send(JSON.stringify(incomingMessage));
     const newMsg = currentMessages.concat(incomingMessage);
     this.setState({
       messages: newMsg
@@ -45,20 +46,26 @@ class App extends Component {
   // the handler will be in chatbar because that component will handle the event
 
   componentDidMount() {
-    console.log('componentDidMount <App />');
-    setTimeout(() => {
-      console.log('Simulating incoming message');
-      // Add a new message to the list of messages in the data store
-      const newMessage = {
-        id: 3,
-        username: 'Michelle',
-        content: 'Hello there!'
-      };
-      const messages = this.state.messages.concat(newMessage);
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({ messages: messages });
-    }, 3000);
+    this.socket = new WebSocket(`ws://${window.location.hostname}:3001`);
+
+    this.socket.onopen = () => {
+      console.log('WOOOOOO SICK A SOCKET!');
+    };
+
+    // console.log('componentDidMount <App />');
+    // setTimeout(() => {
+    //   console.log('Simulating incoming message');
+    //   // Add a new message to the list of messages in the data store
+    //   const newMessage = {
+    //     id: this.state.messages.length + 1,
+    //     username: 'Michelle',
+    //     content: 'Hello there!'
+    //   };
+    //   const messages = this.state.messages.concat(newMessage);
+    //   // Update the state of the app component.
+    //   // Calling setState will trigger a call to render() in App and all child components.
+    //   this.setState({ messages: messages });
+    // }, 3000);
   }
 
   render() {
@@ -70,7 +77,7 @@ class App extends Component {
             Chatty
           </a>
         </nav>
-        <ChatBar user={this.state.currentUser} />
+        <ChatBar user={this.state.currentUser} newMessage={this.newMessage} />
         <MessageList messages={this.state.messages} />
       </div>
     );
