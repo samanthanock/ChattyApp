@@ -7,52 +7,53 @@ class App extends Component {
     super(props);
     // setting intial state
     this.state = {
-      currentUser: { name: 'Cher' }, //--> if currentUser is not defined, means user is Anon
-      messages: [
-        {
-          id: 1,
-          username: 'Bob',
-          content: 'Has anyone seen my marbles?'
-        },
-        {
-          id: 2,
-          username: 'Anonymous',
-          content: 'No, I think you lost them bro.'
-        }
-      ]
+      currentUser: { name: 'Bob' }, //--> if currentUser is not defined, means user is Anon
+      messages: []
     };
     // need to bind in order to use the newMessage function
-    this.newMessage = this.newMessage.bind(this);
+    this.socket = new WebSocket(`ws://${window.location.hostname}:3001`);
   }
   // adding messages through the chatbar//
   //will need a function both in app and in chatbar to handle the event
 
-  newMessage(content) {
-    // what are the current messages?
-    const currentMessages = this.state.messages;
-    // what will we need for the incoming messages?
-    const incomingMessage = {
+  newMessage = (content) => {
+    const newMsg = {
+      type: 'postMessage',
       username: this.state.currentUser.name,
-      content: content,
-      id: currentMessages.length + 1
+      content: content
     };
-    this.socket.send(JSON.stringify(incomingMessage));
-    const newMsg = currentMessages.concat(incomingMessage);
+    console.log('new msg', newMsg);
+    this.socket.send(JSON.stringify(newMsg));
+    console.log('App JSON', this.socket.send(JSON.stringify(newMsg)));
+  };
+  // const newMsg = currentMessages.concat(incomingMessage);
+  // this.setState({
+  //   messages: newMsg
+  // });
+
+  updateName = (currentName) => {
     this.setState({
-      messages: newMsg
+      currentUser: { name: currentName }
     });
-  }
+  };
   //new message will be in here because app deals with data
   // the handler will be in chatbar because that component will handle the event
 
   componentDidMount() {
-    this.socket = new WebSocket(`ws://${window.location.hostname}:3001`);
-
     this.socket.onopen = () => {
       console.log('WOOOOOO SICK A SOCKET!');
     };
 
-    // console.log('componentDidMount <App />');
+    console.log('componentDidMount <App />');
+    this.socket.onmessage = (event) => {
+      let parsedData = JSON.parse(event.data);
+      console.log('recieved msg', parsedData);
+      // // distinguish b/w dif message types and update state
+      const newMessages = this.state.messages.concat(parsedData);
+      this.setState({
+        messages: newMessages
+      });
+    };
     // setTimeout(() => {
     //   console.log('Simulating incoming message');
     //   // Add a new message to the list of messages in the data store
@@ -77,7 +78,10 @@ class App extends Component {
             Chatty
           </a>
         </nav>
-        <ChatBar user={this.state.currentUser} newMessage={this.newMessage} />
+        <ChatBar
+          user={this.state.currentUser.name}
+          newMessage={this.newMessage}
+        />
         <MessageList messages={this.state.messages} />
       </div>
     );
