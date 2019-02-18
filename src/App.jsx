@@ -11,26 +11,16 @@ class App extends Component {
       messages: [],
       count: 0
     };
-    // need to bind in order to use the newMessage function
     this.socket = new WebSocket(`ws://${window.location.hostname}:3001`);
   }
-  // adding messages through the chatbar//
-  //will need a function both in app and in chatbar to handle the event
-
   newMessage = (content) => {
     const newMsg = {
       type: 'postMessage',
       username: this.state.currentUser.name,
       content: content
     };
-    // console.log('new msg', newMsg);
     this.socket.send(JSON.stringify(newMsg));
-    // console.log('App JSON', this.socket.send(JSON.stringify(newMsg)));
   };
-  // const newMsg = currentMessages.concat(incomingMessage);
-  // this.setState({
-  //   messages: newMsg
-  // });
   nameNotification = (newName) => {
     let notification = {
       type: 'postNotification',
@@ -47,9 +37,6 @@ class App extends Component {
     });
     this.nameNotification(currentName);
   };
-  //new message will be in here because app deals with data
-  // the handler will be in chatbar because that component will handle the event
-
   componentDidMount() {
     this.socket.onopen = () => {
       console.log('WOOOOOO SICK A SOCKET!');
