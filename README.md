@@ -20,6 +20,6 @@ ws
 
 ### What Chatty Looks Like
 
-!["Screengrab gif of username change and functionality"]("https://github.com/samanthanock/ChattyApp/blob/master/images/chatty1.gif")
-!["Screengrab gif of username and chat functionality with two users"]("https://github.com/samanthanock/ChattyApp/blob/master/images/chatty2.gif")
-!["Static screengrab of chat with three users"]("https://github.com/samanthanock/ChattyApp/blob/master/images/chattyshot.png")
+!["Screengrab gif of username change and functionality"](https://github.com/samanthanock/ChattyApp/blob/master/images/chatty1.gif)
+!["Screengrab gif of username and chat functionality with two users"](https://github.com/samanthanock/ChattyApp/blob/master/images/chatty2.gif)
+!["Static screengrab of chat with three users"](https://github.com/samanthanock/ChattyApp/blob/master/images/chattyshot.png)
