@@ -1,23 +1,26 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700');
+@import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css');
 
 body {
-  background: white;
   color: black;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Share Tech Mono', monospace;
   font-size: 14px;
-  margin: 70px 0;
+  margin-left: 5em;
+  margin-top: 5em;
+  word-wrap: break-word;
+  padding: 5px;
 }
 
 .chatbar {
-  background: tomato;
-  border-top: 1px solid black;
+  background-color: #16a085;
+  border-top: 5px solid black;
   bottom: 0;
   display: flex;
   left: 0;
   padding: 5px;
   position: fixed;
   right: 0;
+  position: fixed;
 }
 
 .chatbar-message,
@@ -44,9 +47,28 @@ body {
   padding: 5px;
 }
 
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes blinking-cursor {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
+}
 .message.system {
   font-style: italic;
   padding: 5px 20px;
+  animation: typing 2.5s steps(40, end), blinking-cursor 0.5s step-end infinite;
+  color: #e74c3c;
 }
 
 .message-content,
@@ -63,17 +85,23 @@ body {
 .message-username {
   flex: 2;
   font-weight: 700;
+  font-size: 20px;
+  color: #dc7633;
 }
 
 .navbar {
-  background: tomato;
-  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  background-color: #f1c40f;
+  border-bottom: 5px solid black;
   height: 60px;
   left: 0;
   padding: 0 10px;
   position: fixed;
   right: 0;
   top: 0;
+  position: fixed;
 }
 
 .navbar-brand {
@@ -81,9 +109,13 @@ body {
   display: block;
   float: left;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 50px;
   height: 60px;
   line-height: 60px;
   padding: 0 10px;
   text-decoration: none;
+}
+h1 {
+  font-style: italic;
+  animation: typing 2s steps(100, end), blinking-cursor 0.5s step-end infinite;
 }

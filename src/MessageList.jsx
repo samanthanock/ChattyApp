@@ -7,14 +7,13 @@ class MessageList extends Component {
     // need to loop through data array to extract username and messages.
     // .map ????
     const getMessages = this.props.messages.map((msgs) => {
-      console.log({ msgs });
-      return <Message message={msgs} key={msgs.id} />;
+      if (msgs.type === 'postMessage') {
+        return <Message message={msgs} key={msgs.id} />;
+      } else if (msgs.type === 'postNotification') {
+        return <div className="message system">{msgs.content}</div>;
+      }
     });
-    return (
-      <div>
-        <main className="message">{getMessages}</main>
-      </div>
-    );
+    return <main className="message">{getMessages}</main>;
   }
 }
 

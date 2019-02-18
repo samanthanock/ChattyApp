@@ -15,9 +15,8 @@ class ChatBar extends Component {
   submitName(event) {
     if (event.key === 'Enter') {
       const currentName = event.target.value;
-      console.log(currentName);
-      this.props.updateName(currentName);
-      event.target.value = ' ';
+      console.log('username props', this.props);
+      this.props.user(currentName);
     }
   }
   render() {
@@ -27,11 +26,11 @@ class ChatBar extends Component {
           <input
             className="chatbar-username"
             onKeyPress={this.submitName.bind(this)}
-            placeholder="what is damn name?"
+            placeholder="Type username and hit enter!"
           />
           <input
             className="chatbar-message"
-            placeholder="type ur damn messages here and hit the damn enter button"
+            placeholder="Type ur message and hit"
             onKeyPress={this.submit.bind(this)}
           />
         </footer>
